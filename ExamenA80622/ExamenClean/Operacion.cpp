@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "Operacion.h"
 
-Operacion::Operacion(string str): Elemento(), str(str) 
-{// equivalente a this->str = str;
+Operacion::Operacion(string str): Elemento(), str(str){
+// equivalente a this->str = str;
 }
 
 

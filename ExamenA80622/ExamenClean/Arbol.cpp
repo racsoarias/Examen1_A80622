@@ -13,23 +13,25 @@ Arbol::~Arbol(){
 void Arbol::createArbol(Elemento *nodo){
 	if (nodo != NULL){
 		this->raiz = nodo;
-		createArbolRe(raiz);//Este método toma la raíz una vez y la separa
-		segregar(raiz);//Este método revisa todos los nodos y llama a createArbolRe
-		construir(raiz);
+		createArbolRe(raiz);
+		construirRe(raiz);
 		resolverRe(raiz);
 	}
 }
 void Arbol::createArbolRe(Elemento *nodo){
 
-	Operacion *newNodo = static_cast<Operacion*>(nodo);
+	Operacion *newNodo = dynamic_cast<Operacion*>(nodo);
 
 	string str = newNodo->getStr();
-	int i = 0, count = 0, k=0;
+	int i = 0, count = 0;
 	bool hold = false, action = true;
 	char signos[] = { "()+-/*" };
 
-	for (k; k < 4; k++){
+	for (int k = 0; k < 4; k++){
 		while (action && i < str.length()){
+			if (str.at(0) == signos[0] && str.at(str.length() - 1) == signos[1] && count == 0){
+				str = str.substr(1, str.length() - 2);
+			}
 			if (str.at(i) == signos[0]){
 				hold = true;
 				count++;
@@ -39,9 +41,6 @@ void Arbol::createArbolRe(Elemento *nodo){
 				if (count == 0){
 					hold = false;
 				}
-			}
-			if (str.at(0) == signos[0] && str.at(str.length() - 1) == signos[1] && count == 0){
-				str = str.substr(1, str.length() - 2);
 			}
 			if (hold != true && (str.at(i) == signos[k + 2] || str.at(i) == signos[k + 3])){
 				newNodo->setStr(str.substr(i, 1));
@@ -55,74 +54,62 @@ void Arbol::createArbolRe(Elemento *nodo){
 		i = 0;
 		k++;
 	}
-}
-
-void Arbol::segregar(Elemento *nodo){//Este método revisa todos los nodos y llama a createArbolRe
-
 	if (nodo->getHijoIzq() != NULL){
 		createArbolRe(nodo->getHijoIzq());
-		segregar(nodo->getHijoIzq());
 	}
 	if (nodo->getHijoDer() != NULL){
 		createArbolRe(nodo->getHijoDer());
-		segregar(nodo->getHijoDer());
 	}
 }
 
-void Arbol::construir(Elemento *&nodo){
-	Operacion *newNodo = dynamic_cast<Operacion*>(nodo);
+void Arbol::construirRe(Elemento *&nodo){
+	Operacion *temp = dynamic_cast<Operacion*>(nodo);
 
 	if (nodo->getHijoIzq() == NULL && nodo->getHijoDer() == NULL){
-		nodo = new Operando(stod(newNodo->getStr()));
+		nodo = new Operando(stod(temp->getStr()));
 	}
 	else{
-		char c = newNodo->getStr().at(0);
+		char c = temp->getStr().at(0);
 		switch (c){
 
 		case '+':
-			nodo = &*new Suma(c);
+			nodo = new Suma(c);
 			break;
 		case'-':
-			nodo = &*new Resta(c);
+			nodo = new Resta(c);
 			break;
 		case '*':
-			nodo = &*new Multiplicacion(c);
+			nodo = new Multiplicacion(c);
 			break;
 		case '/':
-			nodo = &*new Division(c);
+			nodo = new Division(c);
 			break;
 		default:
 			break;
 		}
-		nodo->setHijoIzq(newNodo->getHijoIzq());
-		nodo->setHijoDer(newNodo->getHijoDer());
+		nodo->setHijoIzq(temp->getHijoIzq());
+		nodo->setHijoDer(temp->getHijoDer());
 	}
 	if (nodo->getHijoIzq() != NULL){
-		construir(nodo->getHijoIzq());
+		construirRe(nodo->getHijoIzq());
 	}
 	if (nodo->getHijoDer() != NULL){
-		construir(nodo->getHijoDer());
+		construirRe(nodo->getHijoDer());
 	}
 }
 
-void Arbol::resolverRe(Elemento *&nodo){
-
-	if (dynamic_cast<Operando*>(nodo->getHijoIzq()) != NULL &&
-		dynamic_cast<Operando*>(nodo->getHijoDer()) != NULL){
-
-		nodo = &dynamic_cast<Operador*>(nodo)->operar(nodo->getHijoIzq(), nodo->getHijoDer());
-		cout << endl;
-	}
-	else{
-		if (dynamic_cast<Operando*>(nodo->getHijoIzq()) == NULL){
+void Arbol::resolverRe(Elemento *& nodo){
+	Operador * operador = dynamic_cast<Operador*>(nodo);
+	if (operador != NULL){
+		if (nodo->getHijoIzq() != NULL){
 			resolverRe(nodo->getHijoIzq());
 		}
-		if (dynamic_cast<Operando*>(nodo->getHijoDer()) == NULL){
+		if (nodo->getHijoDer() != NULL){
 			resolverRe(nodo->getHijoDer());
 		}
+		nodo = operador->operar(nodo->getHijoIzq(), nodo->getHijoDer());
 	}
 }
-
 
 int Arbol::intlength(int i){
 	int len = 0;

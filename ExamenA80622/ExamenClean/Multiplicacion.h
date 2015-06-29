@@ -6,6 +6,6 @@ public:
 	char c; 
 	Multiplicacion(char);
 	~Multiplicacion();
-	virtual Operando operar(Elemento*, Elemento*);
+	virtual Operando * operar(Elemento*, Elemento*);
 };
 

@@ -14,5 +14,6 @@ public:
 	virtual ~Operacion();	
 	
 	string getStr();	
-	void setStr(string);
+	void setStr(string); 
+
 };

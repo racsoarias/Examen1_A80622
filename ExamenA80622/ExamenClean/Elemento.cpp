@@ -27,27 +27,3 @@ void Elemento::setHijoIzq(Elemento * e) {
 void Elemento::setHijoDer(Elemento * e) {
 	this->hijoDer = e;
 }
-/*
-ostream & operator<<(ostream & out, const Elemento & e) {
-	e.imprimir(out);
-	return out;
-}
-
-
-
-bool Elemento::operator <(Elemento& otro) {
-	return this->compareTo(&otro) < 0;
-}
-
-bool Elemento::operator <=(Elemento& otro) {
-	return this->compareTo(&otro) <= 0;
-}
-
-bool Elemento::operator >(Elemento& otro) {
-	return this->compareTo(&otro) > 0;
-}
-
-bool Elemento::operator >=(Elemento& otro) {
-	return this->compareTo(&otro) >= 0;
-}
-*/

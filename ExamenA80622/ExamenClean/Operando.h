@@ -5,9 +5,8 @@ class Operando: public Elemento{
 
 public:
 	double d;
-	int i;
 	Operando(double);
 	~Operando();
-	
+
 };
 

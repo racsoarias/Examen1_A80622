@@ -9,7 +9,7 @@
 using namespace std;
 
 int _tmain(int argc, _TCHAR* argv[]) {
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 	ifstream file("Operaciones.txt");
 	string str;	
 	Lista list, soluciones;
@@ -19,11 +19,7 @@ int _tmain(int argc, _TCHAR* argv[]) {
 		list.insertar(new Operacion(str));
 		tree.createArbol(new Operacion(str));
 		soluciones.insertar(tree.raiz);
-
 	}
-
-	list.~Lista();
-	soluciones.~Lista();
 
 	system("pause");
 	return 0;

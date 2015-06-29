@@ -6,6 +6,6 @@ Suma::Suma(char c){
 }
 Suma::~Suma(){
 }
-Operando Suma::operar(Elemento * a, Elemento * b){
-	return *new Operando(dynamic_cast<Operando*>(a)->d + dynamic_cast<Operando*>(b)->d);
+Operando * Suma::operar(Elemento * a, Elemento * b){
+	return new Operando(dynamic_cast<Operando*>(a)->d + dynamic_cast<Operando*>(b)->d);
 }

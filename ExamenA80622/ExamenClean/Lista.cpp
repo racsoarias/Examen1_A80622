@@ -14,12 +14,11 @@ Lista::~Lista(){
 }
 
 void Lista::insertar(Elemento *nodoNuevo){
-
-	Elemento *nodoAcutal = cabeza;
 	if (cabeza == NULL){
 		cabeza = *&nodoNuevo;
 	}
 	else {
+		Elemento *nodoAcutal = cabeza;
 		while (nodoAcutal->prox != NULL){
 			nodoAcutal = nodoAcutal->prox;
 		}
