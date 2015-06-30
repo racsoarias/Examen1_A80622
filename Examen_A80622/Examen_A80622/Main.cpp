@@ -1,8 +1,5 @@
 ﻿#include "stdafx.h"
-#include "Elemento.h"
-#include "Operador.h"
 #include "Operacion.h"
-#include "Operando.h"
 #include "Lista.h"
 #include "Arbol.h"
 
